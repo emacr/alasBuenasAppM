@@ -1,0 +1,52 @@
+
+
+# Flutter y Dart (Archivos generados y dependencias)
+
+ios/Flutter/ephemeral/
+android/build/
+.pub-cache/
+.packages
+
+# Archivos de bloqueo (Opcional: algunos equipos los suben, otros no. 
+# Si tu guía no dice nada, déjalos fuera del ignore o bórralos de aquí)
+# pubspec.lock
+
+@'
+# Flutter / Dart
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-credentials
+.pub/
+build/
+.idea/
+.vscode/
+*.iml
+.DS_Store
+*.log
+
+# Android
+[.gradle](http://_vscodecontentref_/0)
+/android/app/*.keystore
+[local.properties](http://_vscodecontentref_/1)
+
+# iOS
+/ios/Pods/
+[Runner.xcworkspace](http://_vscodecontentref_/2)
+/ios/Flutter/Flutter.framework/
+/ios/Flutter/Flutter.podspec
+
+# Firebase / generated files
+google-services.json
+GoogleService-Info.plist
+'@ | Out-File -Encoding UTF8 .gitignore -Force
+
+# Temporary files
+*.tmp
+*.temp
+
+# Xcode
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint

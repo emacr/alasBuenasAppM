@@ -12,7 +12,7 @@ class OrderIncommingCall {
   static Future<ApiCallResponse> call({
     String? estado = 'eq.confirmado_sucursal',
     String? jwtToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjQ4NjUwNjR9.quAplfzOgO9_0Dx7bs1Qhw5ONkMgeChjYhR7POCUj6s',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjQ4ODU1NDl9.6GKS8ESA8SO8Pnlkpn1RwEUWcvYj5Qj-9AXhs70A5fA',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'orderIncomming',
@@ -22,7 +22,7 @@ class OrderIncommingCall {
       headers: {
         'Content-Type': 'application/json',
         'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjQ4NjUwNjR9.quAplfzOgO9_0Dx7bs1Qhw5ONkMgeChjYhR7POCUj6s',
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjQ4ODU1NDl9.6GKS8ESA8SO8Pnlkpn1RwEUWcvYj5Qj-9AXhs70A5fA',
       },
       params: {
         'estado_pedido': "${estado}",
@@ -201,7 +201,7 @@ class UpdateEstadoPedidoCall {
       headers: {
         'Content-Type': 'application/json',
         'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjQ4NjUwNjR9.quAplfzOgO9_0Dx7bs1Qhw5ONkMgeChjYhR7POCUj6s',
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjQ4ODU1NDl9.6GKS8ESA8SO8Pnlkpn1RwEUWcvYj5Qj-9AXhs70A5fA',
       },
       params: {},
       body: ffApiRequestBody,

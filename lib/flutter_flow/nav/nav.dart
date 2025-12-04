@@ -38,7 +38,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => RepartidorHomePageWidget(),
+          builder: (context, _) => SupervisorPedidosPageWidget(),//RepartidorHomePageWidget(), //cambio para cargar otra pagina inicial
         ),
         FFRoute(
           name: KitchenNOrdersWidget.routeName,
