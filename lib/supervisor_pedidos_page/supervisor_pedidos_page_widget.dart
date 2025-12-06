@@ -878,7 +878,7 @@ class _SupervisorPedidosPageWidgetState
                                                                           ? 'Listo'
                                                                           : (_model.estadoSeleccionado == 'eq.Entregado en local'
                                                                               ? 'Entregado '
-                                                                              : (_model.estadoSeleccionado == 'eq.Servido en local' ? 'Servido' : (_model.estadoSeleccionado == 'eq.asignado_delivery' ? 'Asignado' : (_model.estadoSeleccionado == 'eq.Cancelado' ? 'Cancelado' : (_model.estadoSeleccionado == 'eq.Entregado' ? 'Entrega Completada' : 'Null'))))))),
+                                                                              : (_model.estadoSeleccionado == 'eq.Servido en local' ? 'Servido' : (_model.estadoSeleccionado == 'eq.en_camino' ? 'Asignado' : (_model.estadoSeleccionado == 'eq.Cancelado' ? 'Cancelado' : (_model.estadoSeleccionado == 'eq.Entregado' ? 'Entrega Completada' : 'Null'))))))),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium

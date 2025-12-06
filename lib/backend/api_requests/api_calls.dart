@@ -12,7 +12,7 @@ class OrderIncommingCall {
   static Future<ApiCallResponse> call({
     String? estado = 'eq.confirmado_sucursal',
     String? jwtToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjQ4NjUwNjR9.quAplfzOgO9_0Dx7bs1Qhw5ONkMgeChjYhR7POCUj6s',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjUwNDMwOTV9.71iXpByDzRFfkGWxkvw1uo6CaSNUv1QPUHG2VR-hOtk',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'orderIncomming',
@@ -22,7 +22,7 @@ class OrderIncommingCall {
       headers: {
         'Content-Type': 'application/json',
         'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjQ4NjUwNjR9.quAplfzOgO9_0Dx7bs1Qhw5ONkMgeChjYhR7POCUj6s',
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjUwNDMwOTV9.71iXpByDzRFfkGWxkvw1uo6CaSNUv1QPUHG2VR-hOtk',
       },
       params: {
         'estado_pedido': "${estado}",
@@ -188,10 +188,12 @@ class UpdateEstadoPedidoCall {
   static Future<ApiCallResponse> call({
     int? idPedido,
     int? nuevoEstadoId,
+    int? repartidorId,
   }) async {
     final ffApiRequestBody = '''
 {
-  "estado_id": ${nuevoEstadoId}
+  "estado_id": ${nuevoEstadoId},
+  "repartidor_id": ${repartidorId}
 }''';
     return ApiManager.instance.makeApiCall(
       callName: 'updateEstadoPedido',
@@ -201,11 +203,34 @@ class UpdateEstadoPedidoCall {
       headers: {
         'Content-Type': 'application/json',
         'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjQ4NjUwNjR9.quAplfzOgO9_0Dx7bs1Qhw5ONkMgeChjYhR7POCUj6s',
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjUwNDMwOTV9.71iXpByDzRFfkGWxkvw1uo6CaSNUv1QPUHG2VR-hOtk',
       },
       params: {},
       body: ffApiRequestBody,
       bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetRepartidoresCall {
+  static Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getRepartidores',
+      apiUrl:
+          'https://postrest-dealercar-alas-buenas.kwu5pq.easypanel.host/lista_repartidores_disponibles',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization':
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjUwNDMwOTV9.71iXpByDzRFfkGWxkvw1uo6CaSNUv1QPUHG2VR-hOtk',
+      },
+      params: {},
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

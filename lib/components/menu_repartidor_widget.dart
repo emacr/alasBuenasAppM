@@ -1,8 +1,10 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'menu_repartidor_model.dart';
 export 'menu_repartidor_model.dart';
 
@@ -57,8 +59,17 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
               child: FFButtonWidget(
-                onPressed: () {
-                  print('Button pressed ...');
+                onPressed: () async {
+                  await launchMap(
+                    address: '${getJsonField(
+                      widget.datosPedido,
+                      r'''$.latitud''',
+                    ).toString()},${getJsonField(
+                      widget.datosPedido,
+                      r'''$.longitud''',
+                    ).toString()}',
+                    title: '',
+                  );
                 },
                 text: 'Abrir en Waze/Google Maps',
                 icon: Icon(
@@ -95,8 +106,14 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
               child: FFButtonWidget(
-                onPressed: () {
-                  print('Button pressed ...');
+                onPressed: () async {
+                  await launchUrl(Uri(
+                    scheme: 'tel',
+                    path: getJsonField(
+                      widget.datosPedido,
+                      r'''$.telefono''',
+                    ).toString(),
+                  ));
                 },
                 text: 'Llamar al Cliente',
                 icon: Icon(
@@ -131,8 +148,41 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
               ),
             ),
             FFButtonWidget(
-              onPressed: () {
-                print('Button pressed ...');
+              onPressed: () async {
+                var confirmDialogResponse = await showDialog<bool>(
+                      context: context,
+                      builder: (alertDialogContext) {
+                        return AlertDialog(
+                          title: Text('Pedido entregado'),
+                          content: Text('El pedido fue entregado al cliente? '),
+                          actions: [
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext, false),
+                              child: Text('Cancelar'),
+                            ),
+                            TextButton(
+                              onPressed: () =>
+                                  Navigator.pop(alertDialogContext, true),
+                              child: Text('Confirmar'),
+                            ),
+                          ],
+                        );
+                      },
+                    ) ??
+                    false;
+                if (confirmDialogResponse) {
+                  await UpdateEstadoPedidoCall.call(
+                    idPedido: getJsonField(
+                      widget.datosPedido,
+                      r'''$.pedido_id''',
+                    ),
+                    nuevoEstadoId: 4,
+                  );
+
+                  Navigator.pop(context);
+                  context.safePop();
+                }
               },
               text: 'Marcar como Entregado',
               icon: Icon(
