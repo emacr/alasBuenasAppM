@@ -80,7 +80,7 @@ class _SupervisorPedidosPageWidgetState
             body: SafeArea(
               top: true,
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 24.0),
+                padding: EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 20.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -205,8 +205,8 @@ class _SupervisorPedidosPageWidgetState
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                       child: Container(
-                        width: 150.0,
-                        height: 150.0,
+                        width: 120.0,
+                        height: 120.0,
                         clipBehavior: Clip.antiAlias,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
@@ -669,6 +669,7 @@ class _SupervisorPedidosPageWidgetState
                               0.0, 40.0, 0.0, 0.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
@@ -681,7 +682,7 @@ class _SupervisorPedidosPageWidgetState
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    50.0, 0.0, 0.0, 30.0),
+                                    0.0, 0.0, 0.0, 30.0),
                                 child: Text(
                                   '¡Todo al día! Esperando nuevos pedidos',
                                   style: FlutterFlowTheme.of(context)

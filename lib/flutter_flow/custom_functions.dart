@@ -180,3 +180,24 @@ int contarComandasListas(List<dynamic>? listaPedidos) {
 
   return contador;
 }
+
+int contarPedidosEntrega(List<dynamic>? listaPedidos) {
+  if (listaPedidos == null || listaPedidos.isEmpty) {
+    return 0;
+  }
+
+  int contador = 0;
+
+  // 2. Recorremos cada pedido de la lista
+  for (var pedido in listaPedidos) {
+    // Obtenemos el estado (asegurándonos de que sea texto)
+    String estado = pedido['estado_pedido']?.toString() ?? '';
+
+    // 3. Verificamos si es uno de los estados que queremos contar
+    if (estado == 'en_camino' || estado == 'eq.en_camino') {
+      contador++;
+    }
+  }
+
+  return contador;
+}

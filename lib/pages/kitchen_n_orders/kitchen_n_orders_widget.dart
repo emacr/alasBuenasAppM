@@ -6,6 +6,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'kitchen_n_orders_model.dart';
@@ -30,6 +31,31 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => KitchenNOrdersModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      while ('1' == '1') {
+        await Future.delayed(
+          Duration(
+            milliseconds: 30000,
+          ),
+        );
+        safeSetState(() => _model.apiRequestCompleter = null);
+        await _model.waitForApiRequestCompleted();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Datos actualizados ',
+              style: TextStyle(
+                color: FlutterFlowTheme.of(context).primaryText,
+              ),
+            ),
+            duration: Duration(milliseconds: 4000),
+            backgroundColor: FlutterFlowTheme.of(context).secondary,
+          ),
+        );
+      }
+    });
   }
 
   @override
@@ -83,7 +109,7 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                 alignment: AlignmentDirectional(0.0, 0.0),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 24.0, 16.0, 24.0),
+                      EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 20.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -211,8 +237,8 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
                         child: Container(
-                          width: 150.0,
-                          height: 150.0,
+                          width: 120.0,
+                          height: 120.0,
                           clipBehavior: Clip.antiAlias,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -296,31 +322,19 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(
                                   Icons.hourglass_top,
                                   color: Color(0xFFF0A719),
                                   size: 24.0,
                                 ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      50.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    '¡Todo al día! Esperando nuevos pedidos',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          font: GoogleFonts.inter(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMedium
-                                                    .fontStyle,
-                                          ),
-                                          letterSpacing: 0.0,
+                                Text(
+                                  '¡Todo al día! Esperando nuevos pedidos',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.inter(
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
@@ -330,7 +344,14 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                  ),
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
                                 ),
                               ],
                             ),

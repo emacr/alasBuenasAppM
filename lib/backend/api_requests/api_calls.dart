@@ -11,8 +11,6 @@ const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 class OrderIncommingCall {
   static Future<ApiCallResponse> call({
     String? estado = 'eq.confirmado_sucursal',
-    String? jwtToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjUwNDMwOTV9.71iXpByDzRFfkGWxkvw1uo6CaSNUv1QPUHG2VR-hOtk',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'orderIncomming',
@@ -21,8 +19,6 @@ class OrderIncommingCall {
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjUwNDMwOTV9.71iXpByDzRFfkGWxkvw1uo6CaSNUv1QPUHG2VR-hOtk',
       },
       params: {
         'estado_pedido': "${estado}",
@@ -227,8 +223,6 @@ class GetRepartidoresCall {
       callType: ApiCallType.GET,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjUwNDMwOTV9.71iXpByDzRFfkGWxkvw1uo6CaSNUv1QPUHG2VR-hOtk',
       },
       params: {},
       returnBody: true,
