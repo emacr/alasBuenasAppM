@@ -56,8 +56,10 @@ class _DetalleRepartidorPageWidgetState
           top: true,
           child: Padding(
             padding: EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
+            child: ListView(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
               children: [
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
@@ -116,20 +118,27 @@ class _DetalleRepartidorPageWidgetState
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                  child: Container(
-                    width: 120.0,
-                    height: 120.0,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                      child: Container(
+                        width: 120.0,
+                        height: 120.0,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          'assets/images/logo.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                    child: Image.asset(
-                      'assets/images/logo.jpg',
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  ],
                 ),
                 Text(
                   getJsonField(
@@ -151,7 +160,7 @@ class _DetalleRepartidorPageWidgetState
                 ),
                 Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
+                      EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 20.0, 10.0),
                   child: Container(
                     width: double.infinity,
                     height: 100.0,
@@ -239,10 +248,10 @@ class _DetalleRepartidorPageWidgetState
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 0.0, 0.0),
                                 child: Text(
-                                  getJsonField(
+                                  'Fecha del pedido: ${functions.formatearFechaIso(getJsonField(
                                     widget.pedidoInfo,
-                                    r'''$.fecha_creacion''',
-                                  ).toString(),
+                                    r'''$.fecha_pedido_confirmado''',
+                                  ).toString())}',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -265,31 +274,6 @@ class _DetalleRepartidorPageWidgetState
                                             .fontStyle,
                                       ),
                                 ),
-                              ),
-                              Text(
-                                'Fecha asignacion: ${getJsonField(
-                                  widget.pedidoInfo,
-                                  r'''$.fecha_creacion''',
-                                ).toString()}',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      font: GoogleFonts.inter(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
                               ),
                             ],
                           ),
@@ -475,7 +459,6 @@ class _DetalleRepartidorPageWidgetState
                             FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                       ),
                 ),
-                Spacer(),
               ],
             ),
           ),

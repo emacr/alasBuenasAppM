@@ -33,12 +33,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => KitchenNOrdersWidget(),
+      errorBuilder: (context, state) => SupervisorPedidosPageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => KitchenNOrdersWidget(),
+          builder: (context, _) => SupervisorPedidosPageWidget(),
         ),
         FFRoute(
           name: KitchenNOrdersWidget.routeName,

@@ -2,7 +2,6 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'dart:async';
@@ -173,7 +172,7 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 5.0, 0.0, 0.0),
+                                0.0, 10.0, 0.0, 0.0),
                             child: Text(
                               'Mostrando ${functions.contarPedidosEntrega(OrderIncommingCall.pedidoCompleto(
                                     repartidorHomePageOrderIncommingResponse
@@ -210,52 +209,32 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
                                   alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Container(
                                     width: 190.4,
-                                    height: 60.0,
+                                    height: 30.4,
                                     decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                                      color: Color(0xFFF0A719),
                                     ),
-                                    child: FFButtonWidget(
-                                      onPressed: () {
-                                        print('Button pressed ...');
-                                      },
-                                      text: 'Entregas pendientes',
-                                      options: FFButtonOptions(
-                                        height: 0.0,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 0.0, 16.0, 0.0),
-                                        iconPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                0.0, 0.0, 0.0, 0.0),
-                                        color: Color(0xFFF0A719),
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                              font: GoogleFonts.interTight(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmall
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmall
-                                                        .fontStyle,
-                                              ),
-                                              color: Colors.white,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleSmall
-                                                      .fontWeight,
+                                    child: Text(
+                                      'Entregas pendientes',
+                                      textAlign: TextAlign.center,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight: FontWeight.bold,
                                               fontStyle:
                                                   FlutterFlowTheme.of(context)
-                                                      .titleSmall
+                                                      .bodyMedium
                                                       .fontStyle,
                                             ),
-                                        elevation: 0.0,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
                                     ),
                                   ),
                                 ),
