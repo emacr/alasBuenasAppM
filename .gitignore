@@ -1,0 +1,80 @@
+@'
+# Flutter / Dart
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+.flutter-credentials
+build/
+# Flutter generated plugin registrant
+.gen/
+# Flutter native build outputs
+**/build/
+# Generated files
+.flutter-plugins-dependencies
+.flutter-plugins
+pubspec.lock
+# If you prefer to track pubspec.lock for apps, delete the above line.
+
+# Android
+/android/.gradle/
+/android/local.properties
+/android/*.keystore
+/android/app/*.keystore
+/android/app/build/
+/**/gradlew
+**/gradlew.bat
+
+# iOS
+/ios/Pods/
+/ios/Flutter/Flutter.framework/
+/ios/Flutter/Flutter.podspec
+/ios/Runner.xcworkspace/
+/ios/Runner/GeneratedPluginRegistrant.* 
+/ios/Runner/Generated.xcconfig
+/ios/Flutter/ephemeral/
+
+# Xcode
+*.xcuserstate
+xcuserdata/
+*.xcscmblueprint
+
+# VS Code / IntelliJ
+.vscode/
+.idea/
+*.iml
+
+# Misc OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Secrets / service files
+google-services.json
+GoogleService-Info.plist
+*.jks
+*.keystore
+key.properties
+
+# Generated assets / local test data
+*.cer
+*.p12
+*.pem
+
+# Temporary files
+*.tmp
+*.temp
+
+# Build output for other platforms
+/.dart_tool/
+.packages
+*.class
+*.exe
+*.so
+*.dll
+
+# Rive and other generated files (if you rebuild them)
+assets/*/*.riv
+'@ 
