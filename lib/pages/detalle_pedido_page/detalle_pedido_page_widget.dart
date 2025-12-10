@@ -503,6 +503,7 @@ class _DetallePedidoPageWidgetState extends State<DetallePedidoPageWidget> {
                           r'''$.pedido_id''',
                         ),
                         nuevoEstadoId: 12,
+                        token: FFAppState().authToken,
                       );
 
                       context.safePop();
@@ -572,6 +573,7 @@ class _DetallePedidoPageWidgetState extends State<DetallePedidoPageWidget> {
                           r'''$.pedido_id''',
                         ),
                         nuevoEstadoId: 11,
+                        token: FFAppState().authToken,
                       );
 
                       context.safePop();
