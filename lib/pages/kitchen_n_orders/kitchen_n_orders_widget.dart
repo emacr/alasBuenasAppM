@@ -164,22 +164,27 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                               },
                                             ) ??
                                             false;
-                                    FFAppState().authToken = '';
-                                    FFAppState().userRol = '';
-                                    FFAppState().userName = '';
-                                    FFAppState().userInfojson = null;
-                                    safeSetState(() {});
+                                    if (confirmDialogResponse) {
+                                      FFAppState().authToken = '';
+                                      FFAppState().userRol = '';
+                                      FFAppState().userName = '';
+                                      FFAppState().userInfojson = null;
+                                      FFAppState().idsEnPreparacionLocal = [];
+                                      safeSetState(() {});
 
-                                    context.goNamed(
-                                      LoginWidget.routeName,
-                                      extra: <String, dynamic>{
-                                        kTransitionInfoKey: TransitionInfo(
-                                          hasTransition: true,
-                                          transitionType:
-                                              PageTransitionType.rightToLeft,
-                                        ),
-                                      },
-                                    );
+                                      context.goNamed(
+                                        LoginWidget.routeName,
+                                        extra: <String, dynamic>{
+                                          kTransitionInfoKey: TransitionInfo(
+                                            hasTransition: true,
+                                            transitionType:
+                                                PageTransitionType.rightToLeft,
+                                          ),
+                                        },
+                                      );
+                                    } else {
+                                      return;
+                                    }
                                   },
                                   text: 'Salir',
                                   options: FFButtonOptions(
@@ -524,15 +529,12 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                                       ),
                                                     ),
                                                     if (functions
-                                                            .existePedidoEnLista(
-                                                                FFAppState()
-                                                                    .pedidosEnPreparacion
-                                                                    .toList(),
+                                                            .esEstadoConfirmadoSucursal(
                                                                 getJsonField(
-                                                                  comandaItemItem,
-                                                                  r'''$.pedido_id''',
-                                                                )) ==
-                                                        false)
+                                                          comandaItemItem,
+                                                          r'''$.estado_pedido''',
+                                                        )) ==
+                                                        true)
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
@@ -593,14 +595,11 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                                         ),
                                                       ),
                                                     if (functions
-                                                            .existePedidoEnLista(
-                                                                FFAppState()
-                                                                    .pedidosEnPreparacion
-                                                                    .toList(),
+                                                            .esEstadoPreparacionCocina(
                                                                 getJsonField(
-                                                                  comandaItemItem,
-                                                                  r'''$.pedido_id''',
-                                                                )) ==
+                                                          comandaItemItem,
+                                                          r'''$.estado_pedido''',
+                                                        )) ==
                                                         true)
                                                       Align(
                                                         alignment:

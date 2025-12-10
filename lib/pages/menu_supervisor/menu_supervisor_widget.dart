@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'menu_supervisor_model.dart';
 export 'menu_supervisor_model.dart';
 
@@ -45,6 +46,8 @@ class _MenuSupervisorWidgetState extends State<MenuSupervisorWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return Container(
       width: double.infinity,
       height: 200.0,
@@ -135,6 +138,7 @@ class _MenuSupervisorWidgetState extends State<MenuSupervisorWidget> {
                       r'''$.pedido_id''',
                     ),
                     nuevoEstadoId: 3,
+                    token: FFAppState().authToken,
                   );
 
                   Navigator.pop(context);
