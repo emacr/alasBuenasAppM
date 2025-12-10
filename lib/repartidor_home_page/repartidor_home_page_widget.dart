@@ -1,13 +1,14 @@
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'repartidor_home_page_model.dart';
 export 'repartidor_home_page_model.dart';
 
@@ -67,10 +68,12 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return FutureBuilder<ApiCallResponse>(
       future: (_model.apiRequestCompleter ??= Completer<ApiCallResponse>()
-            ..complete(OrderIncommingCall.call(
-              estado: 'eq.en_camino',
+            ..complete(GetPedidosRepartidorCall.call(
+              token: FFAppState().authToken,
             )))
           .future,
       builder: (context, snapshot) {
@@ -91,7 +94,7 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
             ),
           );
         }
-        final repartidorHomePageOrderIncommingResponse = snapshot.data!;
+        final repartidorHomePageGetPedidosRepartidorResponse = snapshot.data!;
 
         return GestureDetector(
           onTap: () {
@@ -111,18 +114,103 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
                     Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        FlutterFlowIconButton(
-                          borderRadius: 8.0,
-                          buttonSize: 47.71,
-                          fillColor: Color(0xFFF0A719),
-                          icon: Icon(
-                            Icons.logout,
-                            color: FlutterFlowTheme.of(context).info,
-                            size: 24.0,
-                          ),
-                          onPressed: () {
-                            print('IconButton pressed ...');
-                          },
+                        Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Container(
+                              width: 100.0,
+                              height: 40.27,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                              ),
+                              child: FFButtonWidget(
+                                onPressed: () async {
+                                  var confirmDialogResponse =
+                                      await showDialog<bool>(
+                                            context: context,
+                                            builder: (alertDialogContext) {
+                                              return AlertDialog(
+                                                title: Text('Salir'),
+                                                content: Text(
+                                                    '¿Esta seguro que desea salir de la aplicación?'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            false),
+                                                    child: Text('Cancelar'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            alertDialogContext,
+                                                            true),
+                                                    child: Text('Confirmar'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          ) ??
+                                          false;
+                                  if (confirmDialogResponse) {
+                                    FFAppState().authToken = '';
+                                    FFAppState().userRol = '';
+                                    FFAppState().userName = '';
+                                    FFAppState().userInfojson = null;
+                                    safeSetState(() {});
+
+                                    context.pushNamed(
+                                      LoginWidget.routeName,
+                                      extra: <String, dynamic>{
+                                        kTransitionInfoKey: TransitionInfo(
+                                          hasTransition: true,
+                                          transitionType:
+                                              PageTransitionType.bottomToTop,
+                                        ),
+                                      },
+                                    );
+                                  } else {
+                                    return;
+                                  }
+                                },
+                                text: 'Salir',
+                                options: FFButtonOptions(
+                                  height: 40.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: Color(0xFFF0A719),
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        font: GoogleFonts.interTight(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
+                                      ),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -174,10 +262,12 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 10.0, 0.0, 0.0),
                             child: Text(
-                              'Mostrando ${functions.contarPedidosEntrega(OrderIncommingCall.pedidoCompleto(
-                                    repartidorHomePageOrderIncommingResponse
+                              'Mostrando ${functions.contarPedidosEntrega(getJsonField(
+                                    repartidorHomePageGetPedidosRepartidorResponse
                                         .jsonBody,
-                                  )?.toList()).toString()} pedidos pendientes',
+                                    r'''$''',
+                                    true,
+                                  )).toString()} pedidos pendientes',
                               textAlign: TextAlign.center,
                               style: FlutterFlowTheme.of(context)
                                   .bodyMedium
@@ -209,7 +299,7 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
                                   alignment: AlignmentDirectional(0.0, 0.0),
                                   child: Container(
                                     width: 190.4,
-                                    height: 30.4,
+                                    height: 31.82,
                                     decoration: BoxDecoration(
                                       color: Color(0xFFF0A719),
                                     ),
@@ -250,10 +340,10 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
                             EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                         child: Builder(
                           builder: (context) {
-                            final repartidorPendientes = getJsonField(
-                              repartidorHomePageOrderIncommingResponse.jsonBody,
-                              r'''$''',
-                            ).toList();
+                            final repartidorPendientes =
+                                repartidorHomePageGetPedidosRepartidorResponse
+                                    .jsonBody
+                                    .toList();
 
                             return ListView.builder(
                               padding: EdgeInsets.zero,

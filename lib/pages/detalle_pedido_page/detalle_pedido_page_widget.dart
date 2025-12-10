@@ -474,20 +474,11 @@ class _DetallePedidoPageWidgetState extends State<DetallePedidoPageWidget> {
                   ),
                 ),
               ),
-              if (FFAppState()
-                      .pedidosEnPreparacion
-                      .where((e) =>
-                          getJsonField(
-                            e,
-                            r'''$.pedido_id''',
-                          ) ==
-                          getJsonField(
-                            widget.pedidoInfo,
-                            r'''$.pedido_id''',
-                          ))
-                      .toList()
-                      .length >
-                  0)
+              if (functions.esEstadoPreparacionCocina(getJsonField(
+                    widget.pedidoInfo,
+                    r'''$.estado_pedido''',
+                  )) ==
+                  true)
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
                   child: FFButtonWidget(
@@ -546,26 +537,22 @@ class _DetallePedidoPageWidgetState extends State<DetallePedidoPageWidget> {
                     ),
                   ),
                 ),
-              if (FFAppState()
-                      .pedidosEnPreparacion
-                      .where((e) =>
-                          getJsonField(
-                            e,
-                            r'''$.pedido_id''',
-                          ) ==
-                          getJsonField(
-                            widget.pedidoInfo,
-                            r'''$.pedido_id''',
-                          ))
-                      .toList()
-                      .length ==
-                  0)
+              if (functions.esEstadoConfirmadoSucursal(getJsonField(
+                    widget.pedidoInfo,
+                    r'''$.estado_pedido''',
+                  )) ==
+                  true)
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 16.0),
                   child: FFButtonWidget(
                     onPressed: () async {
-                      FFAppState()
-                          .addToPedidosEnPreparacion(widget.pedidoInfo!);
+                      FFAppState().pedidosEnPreparacion = getJsonField(
+                        widget.pedidoInfo,
+                        r'''$.pedido_id''',
+                        true,
+                      )!
+                          .toList()
+                          .cast<dynamic>();
                       safeSetState(() {});
                       await UpdateEstadoPedidoCall.call(
                         idPedido: getJsonField(

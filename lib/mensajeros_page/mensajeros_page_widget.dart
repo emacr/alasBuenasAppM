@@ -223,13 +223,13 @@ class _MensajerosPageWidgetState extends State<MensajerosPageWidget> {
                                                         r'''$.pedido_id''',
                                                       ),
                                                       nuevoEstadoId: 8,
+                                                      token: FFAppState()
+                                                          .authToken,
                                                       repartidorId:
                                                           getJsonField(
                                                         repartidorItemItem,
                                                         r'''$.repartidor_id''',
                                                       ),
-                                                      token: FFAppState()
-                                                          .authToken,
                                                     );
 
                                                     context.pushNamed(

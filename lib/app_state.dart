@@ -181,6 +181,36 @@ class FFAppState extends ChangeNotifier {
     _userInfojson = value;
     prefs.setString('ff_userInfojson', jsonEncode(value));
   }
+
+  /// pedios en preparacion para la cocina label
+  List<int> _idsEnPreparacionLocal = [];
+  List<int> get idsEnPreparacionLocal => _idsEnPreparacionLocal;
+  set idsEnPreparacionLocal(List<int> value) {
+    _idsEnPreparacionLocal = value;
+  }
+
+  void addToIdsEnPreparacionLocal(int value) {
+    idsEnPreparacionLocal.add(value);
+  }
+
+  void removeFromIdsEnPreparacionLocal(int value) {
+    idsEnPreparacionLocal.remove(value);
+  }
+
+  void removeAtIndexFromIdsEnPreparacionLocal(int index) {
+    idsEnPreparacionLocal.removeAt(index);
+  }
+
+  void updateIdsEnPreparacionLocalAtIndex(
+    int index,
+    int Function(int) updateFn,
+  ) {
+    idsEnPreparacionLocal[index] = updateFn(_idsEnPreparacionLocal[index]);
+  }
+
+  void insertAtIndexInIdsEnPreparacionLocal(int index, int value) {
+    idsEnPreparacionLocal.insert(index, value);
+  }
 }
 
 void _safeInit(Function() initializeField) {

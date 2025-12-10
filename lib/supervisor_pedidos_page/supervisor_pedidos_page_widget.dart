@@ -171,6 +171,8 @@ class _SupervisorPedidosPageWidgetState
                                     safeSetState(() {});
 
                                     context.pushNamed(LoginWidget.routeName);
+                                  } else {
+                                    return;
                                   }
                                 },
                                 text: 'Salir',

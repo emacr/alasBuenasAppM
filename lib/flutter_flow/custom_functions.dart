@@ -216,3 +216,25 @@ int contarListaJson(dynamic lista) {
   // Si no es lista (ej: error o objeto vacio), 0
   return 0;
 }
+
+bool esEstadoConfirmadoSucursal(dynamic datoBd) {
+  // 1. Si no hay dato, es falso
+  if (datoBd == null) {
+    return false;
+  }
+
+  // 2. Convertimos lo que llegue a texto y comparamos
+  // El .toString() convierte el JSON a texto limpio
+  return datoBd.toString() == 'confirmado_sucursal';
+}
+
+bool esEstadoPreparacionCocina(dynamic datoBd) {
+  // 1. Si no hay dato, es falso
+  if (datoBd == null) {
+    return false;
+  }
+
+  // 2. Convertimos lo que llegue a texto y comparamos
+  // El .toString() convierte el JSON a texto limpio
+  return datoBd.toString() == 'en preparacion';
+}

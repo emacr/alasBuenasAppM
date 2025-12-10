@@ -184,8 +184,8 @@ class UpdateEstadoPedidoCall {
   static Future<ApiCallResponse> call({
     int? idPedido,
     int? nuevoEstadoId,
-    int? repartidorId,
     String? token = '',
+    int? repartidorId,
   }) async {
     final ffApiRequestBody = '''
 {
@@ -279,10 +279,7 @@ class GetPedidosRepartidorCall {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token}',
       },
-      params: {
-        'estado_pedido': "neq.entregado",
-        'orden': "fecha_pedido_confirmado.desc",
-      },
+      params: {},
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
