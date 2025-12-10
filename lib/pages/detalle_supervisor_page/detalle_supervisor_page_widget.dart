@@ -8,6 +8,7 @@ import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'detalle_supervisor_page_model.dart';
 export 'detalle_supervisor_page_model.dart';
 
@@ -62,6 +63,8 @@ class _DetalleSupervisorPageWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -539,6 +542,7 @@ class _DetalleSupervisorPageWidgetState
                               r'''$.pedido_id''',
                             ),
                             nuevoEstadoId: 2,
+                            token: FFAppState().authToken,
                           );
                         } else {
                           if (_model.tipoRetiroActual ==
@@ -549,6 +553,7 @@ class _DetalleSupervisorPageWidgetState
                                 r'''$.pedido_id''',
                               ),
                               nuevoEstadoId: 5,
+                              token: FFAppState().authToken,
                             );
                           }
                         }

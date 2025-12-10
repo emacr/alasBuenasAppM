@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'mensajeros_page_model.dart';
 export 'mensajeros_page_model.dart';
 
@@ -45,6 +46,8 @@ class _MensajerosPageWidgetState extends State<MensajerosPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -225,6 +228,8 @@ class _MensajerosPageWidgetState extends State<MensajerosPageWidget> {
                                                         repartidorItemItem,
                                                         r'''$.repartidor_id''',
                                                       ),
+                                                      token: FFAppState()
+                                                          .authToken,
                                                     );
 
                                                     context.pushNamed(

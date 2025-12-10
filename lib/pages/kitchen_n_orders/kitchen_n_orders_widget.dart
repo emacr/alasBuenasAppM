@@ -71,7 +71,8 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
 
     return FutureBuilder<ApiCallResponse>(
       future: (_model.apiRequestCompleter ??= Completer<ApiCallResponse>()
-            ..complete(OrderIncommingCall.call(
+            ..complete(GetPedidosCocinaCall.call(
+              token: FFAppState().authToken,
               estado: 'in.(confirmado_sucursal,en preparacion)',
             )))
           .future,
@@ -93,7 +94,7 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
             ),
           );
         }
-        final kitchenNOrdersOrderIncommingResponse = snapshot.data!;
+        final kitchenNOrdersGetPedidosCocinaResponse = snapshot.data!;
 
         return GestureDetector(
           onTap: () {
@@ -134,8 +135,51 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                   ),
                                 ),
                                 child: FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
+                                  onPressed: () async {
+                                    var confirmDialogResponse =
+                                        await showDialog<bool>(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: Text('Salir'),
+                                                  content: Text(
+                                                      'Seguro que deseas salir de la aplicación?'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext,
+                                                              false),
+                                                      child: Text('Cancelar'),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext,
+                                                              true),
+                                                      child: Text('Confirmar'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            ) ??
+                                            false;
+                                    FFAppState().authToken = '';
+                                    FFAppState().userRol = '';
+                                    FFAppState().userName = '';
+                                    FFAppState().userInfojson = null;
+                                    safeSetState(() {});
+
+                                    context.goNamed(
+                                      LoginWidget.routeName,
+                                      extra: <String, dynamic>{
+                                        kTransitionInfoKey: TransitionInfo(
+                                          hasTransition: true,
+                                          transitionType:
+                                              PageTransitionType.rightToLeft,
+                                        ),
+                                      },
+                                    );
                                   },
                                   text: 'Salir',
                                   options: FFButtonOptions(
@@ -276,9 +320,7 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                         child: Text(
-                          'Mostrando ${functions.contarComandasActivas(OrderIncommingCall.pedidoCompleto(
-                                kitchenNOrdersOrderIncommingResponse.jsonBody,
-                              )?.toList()).toString()} pedidos',
+                          'Mostrando ${functions.contarComandasActivas(kitchenNOrdersGetPedidosCocinaResponse.jsonBody).toString()} pedidos',
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     font: GoogleFonts.inter(
@@ -300,10 +342,12 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                   ),
                         ),
                       ),
-                      if (OrderIncommingCall.pedidoCompleto(
-                            kitchenNOrdersOrderIncommingResponse.jsonBody,
-                          )?.length ==
-                          0)
+                      if (functions
+                              .contarListaJson(
+                                  kitchenNOrdersGetPedidosCocinaResponse
+                                      .jsonBody)
+                              .toString() ==
+                          '0')
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 40.0, 0.0, 0.0),
@@ -357,20 +401,19 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                             ),
                           ),
                         ),
-                      if (OrderIncommingCall.pedidoCompleto(
-                            kitchenNOrdersOrderIncommingResponse.jsonBody,
-                          )!
-                              .length >
-                          0)
+                      if (functions
+                              .contarListaJson(
+                                  kitchenNOrdersGetPedidosCocinaResponse
+                                      .jsonBody)
+                              .toString() !=
+                          '0')
                         Expanded(
                           child: Builder(
                             builder: (context) {
-                              final comandaItem =
-                                  OrderIncommingCall.pedidoCompleto(
-                                        kitchenNOrdersOrderIncommingResponse
-                                            .jsonBody,
-                                      )?.toList() ??
-                                      [];
+                              final comandaItem = getJsonField(
+                                kitchenNOrdersGetPedidosCocinaResponse.jsonBody,
+                                r'''$''',
+                              ).toList();
 
                               return ListView.builder(
                                 padding: EdgeInsets.zero,

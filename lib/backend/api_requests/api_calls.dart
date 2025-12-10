@@ -185,6 +185,7 @@ class UpdateEstadoPedidoCall {
     int? idPedido,
     int? nuevoEstadoId,
     int? repartidorId,
+    String? token = '',
   }) async {
     final ffApiRequestBody = '''
 {
@@ -198,8 +199,7 @@ class UpdateEstadoPedidoCall {
       callType: ApiCallType.PATCH,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiIDogImQ0NzgxOTUwLWM2OWItNGFlYi1hOTY4LTE3ZmUyMWZhY2FjZSIsICJlbWFpbCIgOiAidGVzdEBmbHV0dGVyZmxvdy5jb20iLCAicm9sZSIgOiAid2ViX3VzZXIiLCAiZXhwIiA6IDE3NjUwNDMwOTV9.71iXpByDzRFfkGWxkvw1uo6CaSNUv1QPUHG2VR-hOtk',
+        'Authorization': 'Bearer ${token}',
       },
       params: {},
       body: ffApiRequestBody,
@@ -225,6 +225,91 @@ class GetRepartidoresCall {
         'Content-Type': 'application/json',
       },
       params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class LoginAppMovilCall {
+  static Future<ApiCallResponse> call({
+    String? email = '',
+    String? password = '',
+  }) async {
+    final ffApiRequestBody = '''
+{
+  "email": "${escapeStringForJson(email)}",
+  "password": "${escapeStringForJson(password)}"
+}''';
+    return ApiManager.instance.makeApiCall(
+      callName: 'loginAppMovil',
+      apiUrl:
+          'https://postrest-dealercar-alas-buenas.kwu5pq.easypanel.host/rpc/login_app_movil',
+      callType: ApiCallType.POST,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      params: {},
+      body: ffApiRequestBody,
+      bodyType: BodyType.JSON,
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetPedidosRepartidorCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getPedidosRepartidor',
+      apiUrl:
+          'https://postrest-dealercar-alas-buenas.kwu5pq.easypanel.host/pedidos_mi_reparto',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {
+        'estado_pedido': "neq.entregado",
+        'orden': "fecha_pedido_confirmado.desc",
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+      isStreamingApi: false,
+      alwaysAllowBody: false,
+    );
+  }
+}
+
+class GetPedidosCocinaCall {
+  static Future<ApiCallResponse> call({
+    String? token = '',
+    String? estado = 'eq.confirmado_sucursal',
+  }) async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'getPedidosCocina',
+      apiUrl:
+          'https://postrest-dealercar-alas-buenas.kwu5pq.easypanel.host/pedidos_mi_sucursal',
+      callType: ApiCallType.GET,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${token}',
+      },
+      params: {
+        'estado_pedido': "${estado}",
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,

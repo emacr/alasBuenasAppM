@@ -1,10 +1,13 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'login_model.dart';
 export 'login_model.dart';
 
@@ -58,7 +61,7 @@ class _LoginWidgetState extends State<LoginWidget>
           ),
         ],
       ),
-      'textOnPageLoadAnimation1': AnimationInfo(
+      'textOnPageLoadAnimation': AnimationInfo(
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           VisibilityEffect(duration: 100.ms),
@@ -72,26 +75,6 @@ class _LoginWidgetState extends State<LoginWidget>
           MoveEffect(
             curve: Curves.easeInOut,
             delay: 100.0.ms,
-            duration: 400.0.ms,
-            begin: Offset(0.0, 30.0),
-            end: Offset(0.0, 0.0),
-          ),
-        ],
-      ),
-      'textOnPageLoadAnimation2': AnimationInfo(
-        trigger: AnimationTrigger.onPageLoad,
-        effectsBuilder: () => [
-          VisibilityEffect(duration: 150.ms),
-          FadeEffect(
-            curve: Curves.easeInOut,
-            delay: 150.0.ms,
-            duration: 400.0.ms,
-            begin: 0.0,
-            end: 1.0,
-          ),
-          MoveEffect(
-            curve: Curves.easeInOut,
-            delay: 150.0.ms,
             duration: 400.0.ms,
             begin: Offset(0.0, 30.0),
             end: Offset(0.0, 0.0),
@@ -136,6 +119,8 @@ class _LoginWidgetState extends State<LoginWidget>
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -149,13 +134,13 @@ class _LoginWidgetState extends State<LoginWidget>
           children: [
             Container(
               width: double.infinity,
-              height: 300.0,
+              height: 314.7,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color(0xFF4B39EF),
-                    Color(0xFFFF5963),
-                    Color(0xFFEE8B60)
+                    FlutterFlowTheme.of(context).tertiary,
+                    Color(0xFF5D2B13),
+                    Color(0xFFF0A719)
                   ],
                   stops: [0.0, 0.5, 1.0],
                   begin: AlignmentDirectional(-1.0, -1.0),
@@ -178,18 +163,22 @@ class _LoginWidgetState extends State<LoginWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 100.0,
-                      height: 100.0,
+                      width: 130.0,
+                      height: 130.0,
                       decoration: BoxDecoration(
                         color: Color(0xCCFFFFFF),
-                        borderRadius: BorderRadius.circular(16.0),
+                        shape: BoxShape.circle,
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.animation,
-                          color: Color(0xFF4B39EF),
-                          size: 44.0,
+                      child: Container(
+                        width: 200.0,
+                        height: 200.0,
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                        ),
+                        child: Image.asset(
+                          'assets/images/logo.jpg',
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ).animateOnPageLoad(
@@ -198,7 +187,7 @@ class _LoginWidgetState extends State<LoginWidget>
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
                       child: Text(
-                        'Sign In',
+                        'Login',
                         style:
                             FlutterFlowTheme.of(context).headlineSmall.override(
                                   font: GoogleFonts.plusJakartaSans(
@@ -216,31 +205,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                       .fontStyle,
                                 ),
                       ).animateOnPageLoad(
-                          animationsMap['textOnPageLoadAnimation1']!),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                      child: Text(
-                        'Use the account below to sign in.',
-                        style:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  font: GoogleFonts.plusJakartaSans(
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
-                                  ),
-                                  color: Color(0xFF57636C),
-                                  fontSize: 14.0,
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w500,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontStyle,
-                                ),
-                      ).animateOnPageLoad(
-                          animationsMap['textOnPageLoadAnimation2']!),
+                          animationsMap['textOnPageLoadAnimation']!),
                     ),
                   ],
                 ),
@@ -266,7 +231,7 @@ class _LoginWidgetState extends State<LoginWidget>
                           autofillHints: [AutofillHints.email],
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Email',
+                            labelText: 'Correo',
                             labelStyle: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .override(
@@ -350,7 +315,7 @@ class _LoginWidgetState extends State<LoginWidget>
                           autofillHints: [AutofillHints.password],
                           obscureText: !_model.passwordVisibility,
                           decoration: InputDecoration(
-                            labelText: 'Password',
+                            labelText: 'Contraseña',
                             labelStyle: FlutterFlowTheme.of(context)
                                 .labelMedium
                                 .override(
@@ -441,10 +406,65 @@ class _LoginWidgetState extends State<LoginWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            _model.loginOutput = await LoginAppMovilCall.call(
+                              email: _model.emailAddressTextController.text,
+                              password: _model.passwordTextController.text,
+                            );
+
+                            if ((_model.loginOutput?.succeeded ?? true)) {
+                              FFAppState().authToken = getJsonField(
+                                (_model.loginOutput?.jsonBody ?? ''),
+                                r'''$.access_token''',
+                              ).toString();
+                              FFAppState().userRol = getJsonField(
+                                (_model.loginOutput?.jsonBody ?? ''),
+                                r'''$.user_info.rol''',
+                              ).toString();
+                              FFAppState().userName = getJsonField(
+                                (_model.loginOutput?.jsonBody ?? ''),
+                                r'''$.user_info.nombre''',
+                              ).toString();
+                              FFAppState().userInfojson = getJsonField(
+                                (_model.loginOutput?.jsonBody ?? ''),
+                                r'''$.user_info''',
+                              );
+                              safeSetState(() {});
+                              if (FFAppState().userRol == 'repartidor') {
+                                context.pushNamed(
+                                    RepartidorHomePageWidget.routeName);
+                              }
+                              if (FFAppState().userRol == 'operador') {
+                                context
+                                    .pushNamed(KitchenNOrdersWidget.routeName);
+                              }
+                              if (FFAppState().userRol == 'sucursal_manager') {
+                                context.pushNamed(
+                                    SupervisorPedidosPageWidget.routeName);
+                              }
+                            } else {
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Credenciales incorrectas'),
+                                    content: Text(
+                                        'El email o contraseña son invalidos.'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+
+                            safeSetState(() {});
                           },
-                          text: 'Sign In',
+                          text: 'Ingresar',
                           options: FFButtonOptions(
                             width: 230.0,
                             height: 52.0,
@@ -452,7 +472,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                 0.0, 0.0, 0.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
                                 0.0, 0.0, 0.0, 0.0),
-                            color: Color(0xFF4B39EF),
+                            color: Color(0xFFF0A719),
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleSmall
                                 .override(
@@ -486,10 +506,26 @@ class _LoginWidgetState extends State<LoginWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (alertDialogContext) {
+                                return AlertDialog(
+                                  title: Text('Registro'),
+                                  content: Text(
+                                      'Contacte al supervisor de su sucursal para que le brinde el acceso'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.pop(alertDialogContext),
+                                      child: Text('Ok'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                           },
-                          text: 'Forgot Password',
+                          text: 'Olvido su contraseña?',
                           options: FFButtonOptions(
                             width: 230.0,
                             height: 44.0,

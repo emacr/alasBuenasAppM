@@ -201,3 +201,18 @@ int contarPedidosEntrega(List<dynamic>? listaPedidos) {
 
   return contador;
 }
+
+int contarListaJson(dynamic lista) {
+  // Si es nulo, 0
+  if (lista == null) {
+    return 0;
+  }
+
+  // Si es una lista real, devuelve su tamaño
+  if (lista is List) {
+    return lista.length;
+  }
+
+  // Si no es lista (ej: error o objeto vacio), 0
+  return 0;
+}

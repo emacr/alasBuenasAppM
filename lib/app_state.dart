@@ -41,6 +41,24 @@ class FFAppState extends ChangeNotifier {
           }).toList() ??
           _pedidosListos;
     });
+    _safeInit(() {
+      _authToken = prefs.getString('ff_authToken') ?? _authToken;
+    });
+    _safeInit(() {
+      _userRol = prefs.getString('ff_userRol') ?? _userRol;
+    });
+    _safeInit(() {
+      _userName = prefs.getString('ff_userName') ?? _userName;
+    });
+    _safeInit(() {
+      if (prefs.containsKey('ff_userInfojson')) {
+        try {
+          _userInfojson = jsonDecode(prefs.getString('ff_userInfojson') ?? '');
+        } catch (e) {
+          print("Can't decode persisted json. Error: $e.");
+        }
+      }
+    });
   }
 
   void update(VoidCallback callback) {
@@ -130,6 +148,38 @@ class FFAppState extends ChangeNotifier {
     pedidosListos.insert(index, value);
     prefs.setStringList(
         'ff_pedidosListos', _pedidosListos.map((x) => jsonEncode(x)).toList());
+  }
+
+  /// token del login
+  String _authToken = '';
+  String get authToken => _authToken;
+  set authToken(String value) {
+    _authToken = value;
+    prefs.setString('ff_authToken', value);
+  }
+
+  /// el rol del usuario del login
+  String _userRol = '';
+  String get userRol => _userRol;
+  set userRol(String value) {
+    _userRol = value;
+    prefs.setString('ff_userRol', value);
+  }
+
+  /// nombre del usuario del login
+  String _userName = '';
+  String get userName => _userName;
+  set userName(String value) {
+    _userName = value;
+    prefs.setString('ff_userName', value);
+  }
+
+  /// info completa del user del login
+  dynamic _userInfojson;
+  dynamic get userInfojson => _userInfojson;
+  set userInfojson(dynamic value) {
+    _userInfojson = value;
+    prefs.setString('ff_userInfojson', jsonEncode(value));
   }
 }
 
