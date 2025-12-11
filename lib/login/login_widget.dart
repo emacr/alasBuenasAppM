@@ -38,10 +38,10 @@ class _LoginWidgetState extends State<LoginWidget>
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       safeSetState(() {
-        _model.emailAddressTextController?.text = '\"\"';
+        _model.emailAddressTextController?.text = '';
       });
       safeSetState(() {
-        _model.passwordTextController?.text = '\"\"';
+        _model.passwordTextController?.text = '';
       });
     });
 
