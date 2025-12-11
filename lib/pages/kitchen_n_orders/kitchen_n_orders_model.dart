@@ -6,6 +6,10 @@ import 'kitchen_n_orders_widget.dart' show KitchenNOrdersWidget;
 import 'package:flutter/material.dart';
 
 class KitchenNOrdersModel extends FlutterFlowModel<KitchenNOrdersWidget> {
+  ///  Local state fields for this page.
+  /// refresh de la pagina a la bd
+  bool keepUpdating = true;
+
   ///  State fields for stateful widgets in this page.
 
   Completer<ApiCallResponse>? apiRequestCompleter;
