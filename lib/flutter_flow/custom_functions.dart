@@ -202,6 +202,27 @@ int contarPedidosEntrega(List<dynamic>? listaPedidos) {
   return contador;
 }
 
+int contarPedidosEntregadosRepartidor(List<dynamic>? listaPedidos) {
+  if (listaPedidos == null || listaPedidos.isEmpty) {
+    return 0;
+  }
+
+  int contador = 0;
+
+  // 2. Recorremos cada pedido de la lista
+  for (var pedido in listaPedidos) {
+    // Obtenemos el estado (asegurándonos de que sea texto)
+    String estado = pedido['estado_pedido']?.toString() ?? '';
+
+    // 3. Verificamos si es uno de los estados que queremos contar
+    if (estado == 'Entregado' || estado == 'eq.Entregado') {
+      contador++;
+    }
+  }
+
+  return contador;
+}
+
 int contarListaJson(dynamic lista) {
   // Si es nulo, 0
   if (lista == null) {

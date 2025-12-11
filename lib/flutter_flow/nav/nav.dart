@@ -104,6 +104,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               ParamType.JSON,
             ),
           ),
+        ),
+        FFRoute(
+          name: PedidosEntregadosRepartidorWidget.routeName,
+          path: PedidosEntregadosRepartidorWidget.routePath,
+          builder: (context, params) => PedidosEntregadosRepartidorWidget(
+            pedidoAAsignar: params.getParam(
+              'pedidoAAsignar',
+              ParamType.JSON,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

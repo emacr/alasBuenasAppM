@@ -34,6 +34,8 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      safeSetState(() => _model.apiRequestCompleter = null);
+      await _model.waitForApiRequestCompleted();
       while ('1' == '1') {
         await Future.delayed(
           Duration(
@@ -45,7 +47,7 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Datos actualizados ',
+              'Datos actualizados',
               style: TextStyle(
                 color: FlutterFlowTheme.of(context).primaryText,
               ),

@@ -182,10 +182,16 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
                     ),
                     nuevoEstadoId: 4,
                     token: FFAppState().authToken,
+                    repartidorId: getJsonField(
+                      FFAppState().userInfojson,
+                      r'''$.repartidor_id''',
+                    ),
                   );
 
                   Navigator.pop(context);
                   context.safePop();
+                } else {
+                  return;
                 }
               },
               text: 'Marcar como Entregado',

@@ -15,3 +15,5 @@ export '/repartidor_home_page/repartidor_home_page_widget.dart'
 export '/pages/detalle_repartidor_page/detalle_repartidor_page_widget.dart'
     show DetalleRepartidorPageWidget;
 export '/mensajeros_page/mensajeros_page_widget.dart' show MensajerosPageWidget;
+export '/pedidos_entregados_repartidor/pedidos_entregados_repartidor_widget.dart'
+    show PedidosEntregadosRepartidorWidget;
