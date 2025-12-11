@@ -233,7 +233,6 @@ class _LoginWidgetState extends State<LoginWidget>
                               controller: _model.emailAddressTextController,
                               focusNode: _model.emailAddressFocusNode,
                               autofocus: true,
-                              autofillHints: [AutofillHints.email],
                               obscureText: false,
                               decoration: InputDecoration(
                                 labelText: 'Correo',
@@ -319,7 +318,6 @@ class _LoginWidgetState extends State<LoginWidget>
                               controller: _model.passwordTextController,
                               focusNode: _model.passwordFocusNode,
                               autofocus: false,
-                              autofillHints: [AutofillHints.password],
                               obscureText: !_model.passwordVisibility,
                               decoration: InputDecoration(
                                 labelText: 'Contraseña',
