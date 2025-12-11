@@ -11,6 +11,9 @@ class SupervisorPedidosPageModel
   /// id para estados del supervisor
   String estadoSeleccionado = 'eq.confirmado_sucursal';
 
+  /// auto refresh de supervisr
+  bool keepUpdatingSupervisor = true;
+
   ///  State fields for stateful widgets in this page.
 
   Completer<ApiCallResponse>? apiRequestCompleter;

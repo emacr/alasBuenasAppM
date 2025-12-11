@@ -3,6 +3,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -85,6 +86,7 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconColor: FlutterFlowTheme.of(context).error,
                   color: Color(0xFFF0A719),
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         font: GoogleFonts.interTight(
@@ -94,7 +96,7 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
                           fontStyle:
                               FlutterFlowTheme.of(context).titleSmall.fontStyle,
                         ),
-                        color: Colors.white,
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
                         letterSpacing: 0.0,
                         fontWeight:
                             FlutterFlowTheme.of(context).titleSmall.fontWeight,
@@ -116,8 +118,8 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
                   ).toString()}');
                 },
                 text: 'Contactar por WhatsApp',
-                icon: Icon(
-                  Icons.wechat_sharp,
+                icon: FaIcon(
+                  FontAwesomeIcons.whatsapp,
                   size: 20.0,
                 ),
                 options: FFButtonOptions(
@@ -126,6 +128,7 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconColor: Color(0xFF25D366),
                   color: Color(0xFFF0A719),
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         font: GoogleFonts.interTight(
@@ -170,6 +173,7 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
                   padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                   iconPadding:
                       EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconColor: FlutterFlowTheme.of(context).primary,
                   color: Color(0xFFF0A719),
                   textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                         font: GoogleFonts.interTight(
@@ -245,6 +249,7 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
                 height: 40.0,
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
                 iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                iconColor: Color(0xFFFFE259),
                 color: Color(0xFFF0A719),
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       font: GoogleFonts.interTight(
