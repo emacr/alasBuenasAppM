@@ -35,7 +35,7 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      while ('1' == '1') {
+      while (_model.keepUpdatingRepartidor == true) {
         await Future.delayed(
           Duration(
             milliseconds: 30000,
@@ -164,6 +164,8 @@ class _RepartidorHomePageWidgetState extends State<RepartidorHomePageWidget> {
                                       FFAppState().userRol = '';
                                       FFAppState().userName = '';
                                       FFAppState().userInfojson = null;
+                                      safeSetState(() {});
+                                      _model.keepUpdatingRepartidor = false;
                                       safeSetState(() {});
 
                                       context.pushNamed(

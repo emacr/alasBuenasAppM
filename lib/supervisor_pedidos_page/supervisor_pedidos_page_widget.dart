@@ -37,7 +37,7 @@ class _SupervisorPedidosPageWidgetState
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      while ('1' == '1') {
+      while (_model.keepUpdatingSupervisor == true) {
         await Future.delayed(
           Duration(
             milliseconds: 30000,
@@ -171,6 +171,8 @@ class _SupervisorPedidosPageWidgetState
                                       FFAppState().userRol = '';
                                       FFAppState().userName = '';
                                       FFAppState().userInfojson = null;
+                                      safeSetState(() {});
+                                      _model.keepUpdatingSupervisor = false;
                                       safeSetState(() {});
 
                                       context.pushNamed(LoginWidget.routeName);

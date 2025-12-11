@@ -1,9 +1,11 @@
 import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'mensajeros_page_model.dart';
@@ -116,7 +118,7 @@ class _MensajerosPageWidgetState extends State<MensajerosPageWidget> {
                 Expanded(
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 15.0, 16.0, 6.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 6.0),
                     child: Container(
                       width: double.infinity,
                       height: 100.0,
@@ -216,25 +218,60 @@ class _MensajerosPageWidgetState extends State<MensajerosPageWidget> {
                                                         0.0, 10.0, 0.0, 0.0),
                                                 child: FFButtonWidget(
                                                   onPressed: () async {
-                                                    await UpdateEstadoPedidoCall
-                                                        .call(
-                                                      idPedido: getJsonField(
-                                                        widget.pedidoAAsignar,
-                                                        r'''$.pedido_id''',
-                                                      ),
-                                                      nuevoEstadoId: 8,
-                                                      token: FFAppState()
-                                                          .authToken,
-                                                      repartidorId:
-                                                          getJsonField(
-                                                        repartidorItemItem,
-                                                        r'''$.repartidor_id''',
-                                                      ),
-                                                    );
+                                                    var confirmDialogResponse =
+                                                        await showDialog<bool>(
+                                                              context: context,
+                                                              builder:
+                                                                  (alertDialogContext) {
+                                                                return AlertDialog(
+                                                                  title: Text(
+                                                                      'Asignar mensajero'),
+                                                                  content: Text(
+                                                                      'Desea agregar el pedido a este mensajero?'),
+                                                                  actions: [
+                                                                    TextButton(
+                                                                      onPressed: () => Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          false),
+                                                                      child: Text(
+                                                                          'Cancelar'),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed: () => Navigator.pop(
+                                                                          alertDialogContext,
+                                                                          true),
+                                                                      child: Text(
+                                                                          'Confirmar'),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            ) ??
+                                                            false;
+                                                    if (confirmDialogResponse) {
+                                                      await UpdateEstadoPedidoCall
+                                                          .call(
+                                                        idPedido: getJsonField(
+                                                          widget
+                                                              .pedidoAAsignar,
+                                                          r'''$.pedido_id''',
+                                                        ),
+                                                        nuevoEstadoId: 8,
+                                                        token: FFAppState()
+                                                            .authToken,
+                                                        repartidorId:
+                                                            getJsonField(
+                                                          repartidorItemItem,
+                                                          r'''$.repartidor_id''',
+                                                        ),
+                                                      );
 
-                                                    context.pushNamed(
-                                                        SupervisorPedidosPageWidget
-                                                            .routeName);
+                                                      context.pushNamed(
+                                                          SupervisorPedidosPageWidget
+                                                              .routeName);
+                                                    } else {
+                                                      return;
+                                                    }
                                                   },
                                                   text: 'Asignar ',
                                                   options: FFButtonOptions(
@@ -285,6 +322,25 @@ class _MensajerosPageWidgetState extends State<MensajerosPageWidget> {
                                                             20.0),
                                                   ),
                                                 ),
+                                              ),
+                                              FlutterFlowIconButton(
+                                                borderRadius: 8.0,
+                                                buttonSize: 40.0,
+                                                fillColor: Color(0xFF25D366),
+                                                icon: FaIcon(
+                                                  FontAwesomeIcons.whatsapp,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .info,
+                                                  size: 24.0,
+                                                ),
+                                                onPressed: () async {
+                                                  await launchURL(
+                                                      'https://wa.me/${getJsonField(
+                                                    repartidorItemItem,
+                                                    r'''$.telefono''',
+                                                  ).toString()}');
+                                                },
                                               ),
                                             ],
                                           ),

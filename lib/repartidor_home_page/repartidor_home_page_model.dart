@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 
 class RepartidorHomePageModel
     extends FlutterFlowModel<RepartidorHomePageWidget> {
+  ///  Local state fields for this page.
+  /// auto refres en repartidor
+  bool keepUpdatingRepartidor = true;
+
   ///  State fields for stateful widgets in this page.
 
   Completer<ApiCallResponse>? apiRequestCompleter;
