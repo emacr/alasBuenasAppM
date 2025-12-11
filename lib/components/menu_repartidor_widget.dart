@@ -110,6 +110,47 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
               child: FFButtonWidget(
                 onPressed: () async {
+                  await launchURL('https://wa.me/${getJsonField(
+                    widget.datosPedido,
+                    r'''$.telefono''',
+                  ).toString()}');
+                },
+                text: 'Contactar por WhatsApp',
+                icon: Icon(
+                  Icons.wechat_sharp,
+                  size: 20.0,
+                ),
+                options: FFButtonOptions(
+                  width: double.infinity,
+                  height: 40.0,
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: Color(0xFFF0A719),
+                  textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                        font: GoogleFonts.interTight(
+                          fontWeight: FlutterFlowTheme.of(context)
+                              .titleSmall
+                              .fontWeight,
+                          fontStyle:
+                              FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                        ),
+                        color: Colors.white,
+                        letterSpacing: 0.0,
+                        fontWeight:
+                            FlutterFlowTheme.of(context).titleSmall.fontWeight,
+                        fontStyle:
+                            FlutterFlowTheme.of(context).titleSmall.fontStyle,
+                      ),
+                  elevation: 0.0,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+              child: FFButtonWidget(
+                onPressed: () async {
                   await launchUrl(Uri(
                     scheme: 'tel',
                     path: getJsonField(
@@ -118,10 +159,10 @@ class _MenuRepartidorWidgetState extends State<MenuRepartidorWidget> {
                     ).toString(),
                   ));
                 },
-                text: 'Llamar al Cliente',
+                text: 'LLamar al cliente',
                 icon: Icon(
-                  Icons.call_sharp,
-                  size: 20.0,
+                  Icons.call,
+                  size: 15.0,
                 ),
                 options: FFButtonOptions(
                   width: double.infinity,

@@ -236,7 +236,7 @@ class _MensajerosPageWidgetState extends State<MensajerosPageWidget> {
                                                         SupervisorPedidosPageWidget
                                                             .routeName);
                                                   },
-                                                  text: 'Asignar mensajero',
+                                                  text: 'Asignar ',
                                                   options: FFButtonOptions(
                                                     height: 40.0,
                                                     padding:

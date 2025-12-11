@@ -36,7 +36,7 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       safeSetState(() => _model.apiRequestCompleter = null);
       await _model.waitForApiRequestCompleted();
-      while ('1' == '1') {
+      while (_model.keepUpdating == true) {
         await Future.delayed(
           Duration(
             milliseconds: 30000,
@@ -103,103 +103,120 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
             FocusScope.of(context).unfocus();
             FocusManager.instance.primaryFocus?.unfocus();
           },
-          child: Scaffold(
-            key: scaffoldKey,
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-            body: SafeArea(
-              top: true,
-              child: Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 20.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                width: 62.55,
-                                height: 40.0,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFF0A719),
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(8.0),
-                                    bottomRight: Radius.circular(8.0),
-                                    topLeft: Radius.circular(8.0),
-                                    topRight: Radius.circular(8.0),
-                                  ),
-                                ),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    var confirmDialogResponse =
-                                        await showDialog<bool>(
-                                              context: context,
-                                              builder: (alertDialogContext) {
-                                                return AlertDialog(
-                                                  title: Text('Salir'),
-                                                  content: Text(
-                                                      'Seguro que deseas salir de la aplicación?'),
-                                                  actions: [
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext,
-                                                              false),
-                                                      child: Text('Cancelar'),
-                                                    ),
-                                                    TextButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              alertDialogContext,
-                                                              true),
-                                                      child: Text('Confirmar'),
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            ) ??
-                                            false;
-                                    if (confirmDialogResponse) {
-                                      FFAppState().authToken = '';
-                                      FFAppState().userRol = '';
-                                      FFAppState().userName = '';
-                                      FFAppState().userInfojson = null;
-                                      FFAppState().idsEnPreparacionLocal = [];
-                                      safeSetState(() {});
-
-                                      context.goNamed(
-                                        LoginWidget.routeName,
-                                        extra: <String, dynamic>{
-                                          kTransitionInfoKey: TransitionInfo(
-                                            hasTransition: true,
-                                            transitionType:
-                                                PageTransitionType.rightToLeft,
-                                          ),
-                                        },
-                                      );
-                                    } else {
-                                      return;
-                                    }
-                                  },
-                                  text: 'Salir',
-                                  options: FFButtonOptions(
-                                    height: 40.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
+          child: PopScope(
+            canPop: false,
+            child: Scaffold(
+              key: scaffoldKey,
+              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+              body: SafeArea(
+                top: true,
+                child: Align(
+                  alignment: AlignmentDirectional(0.0, 0.0),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 10.0, 20.0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Container(
+                                  width: 62.55,
+                                  height: 40.0,
+                                  decoration: BoxDecoration(
                                     color: Color(0xFFF0A719),
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          font: GoogleFonts.interTight(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(8.0),
+                                      bottomRight: Radius.circular(8.0),
+                                      topLeft: Radius.circular(8.0),
+                                      topRight: Radius.circular(8.0),
+                                    ),
+                                  ),
+                                  child: FFButtonWidget(
+                                    onPressed: () async {
+                                      var confirmDialogResponse =
+                                          await showDialog<bool>(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text('Salir'),
+                                                    content: Text(
+                                                        'Seguro que deseas salir de la aplicación?'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                false),
+                                                        child: Text('Cancelar'),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext,
+                                                                true),
+                                                        child:
+                                                            Text('Confirmar'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              ) ??
+                                              false;
+                                      if (confirmDialogResponse) {
+                                        FFAppState().authToken = '';
+                                        FFAppState().userRol = '';
+                                        FFAppState().userName = '';
+                                        FFAppState().userInfojson = null;
+                                        FFAppState().idsEnPreparacionLocal = [];
+                                        safeSetState(() {});
+                                        _model.keepUpdating = false;
+                                        safeSetState(() {});
+
+                                        context.goNamed(
+                                          LoginWidget.routeName,
+                                          extra: <String, dynamic>{
+                                            kTransitionInfoKey: TransitionInfo(
+                                              hasTransition: true,
+                                              transitionType: PageTransitionType
+                                                  .rightToLeft,
+                                            ),
+                                          },
+                                        );
+                                      } else {
+                                        return;
+                                      }
+                                    },
+                                    text: 'Salir',
+                                    options: FFButtonOptions(
+                                      height: 40.0,
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 0.0, 16.0, 0.0),
+                                      iconPadding:
+                                          EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 0.0),
+                                      color: Color(0xFFF0A719),
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            font: GoogleFonts.interTight(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .fontStyle,
+                                            ),
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
                                                     .titleSmall
@@ -209,137 +226,119 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                                     .titleSmall
                                                     .fontStyle,
                                           ),
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .fontStyle,
-                                        ),
-                                    elevation: 0.0,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          FFButtonWidget(
-                            onPressed: () async {
-                              safeSetState(
-                                  () => _model.apiRequestCompleter = null);
-                              await _model.waitForApiRequestCompleted();
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Buscando nuevos pedidos...',
-                                    style: TextStyle(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
+                                      elevation: 0.0,
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                   ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).secondary,
                                 ),
-                              );
-                            },
-                            text: 'Actualizar',
-                            icon: Icon(
-                              Icons.sync,
-                              size: 15.0,
+                              ],
                             ),
-                            options: FFButtonOptions(
-                              width: 132.93,
-                              height: 30.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16.0, 0.0, 16.0, 0.0),
-                              iconAlignment: IconAlignment.start,
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: Color(0xFFF0A719),
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    font: GoogleFonts.interTight(
+                            FFButtonWidget(
+                              onPressed: () async {
+                                safeSetState(
+                                    () => _model.apiRequestCompleter = null);
+                                await _model.waitForApiRequestCompleted();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Buscando nuevos pedidos...',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                );
+                              },
+                              text: 'Actualizar',
+                              icon: Icon(
+                                Icons.sync,
+                                size: 15.0,
+                              ),
+                              options: FFButtonOptions(
+                                width: 132.93,
+                                height: 30.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 16.0, 0.0),
+                                iconAlignment: IconAlignment.start,
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color: Color(0xFFF0A719),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .override(
+                                      font: GoogleFonts.interTight(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
+                                      ),
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
                                       fontStyle: FlutterFlowTheme.of(context)
                                           .titleSmall
                                           .fontStyle,
                                     ),
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.bold,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .fontStyle,
-                                  ),
-                              elevation: 10.0,
-                              borderRadius: BorderRadius.circular(8.0),
+                                elevation: 10.0,
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 10.0),
+                          child: Container(
+                            width: 120.0,
+                            height: 120.0,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                            ),
+                            child: Image.asset(
+                              'assets/images/logo.jpg',
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        ],
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                        child: Container(
-                          width: 120.0,
-                          height: 120.0,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: Image.asset(
-                            'assets/images/logo.jpg',
-                            fit: BoxFit.cover,
-                          ),
                         ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-                        child: Text(
-                          'Comandas activas',
-                          textAlign: TextAlign.center,
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    fontSize: 20.0,
-                                    letterSpacing: 0.0,
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 16.0, 0.0, 0.0),
+                          child: Text(
+                            'Comandas activas',
+                            textAlign: TextAlign.center,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
                                     fontWeight: FontWeight.bold,
                                     fontStyle: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontStyle,
                                   ),
+                                  fontSize: 20.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                        child: Text(
-                          'Mostrando ${functions.contarComandasActivas(kitchenNOrdersGetPedidosCocinaResponse.jsonBody).toString()} pedidos',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    font: GoogleFonts.inter(
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .fontStyle,
-                                    ),
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 20.0, 0.0, 0.0),
+                          child: Text(
+                            'Mostrando ${functions.contarComandasActivas(kitchenNOrdersGetPedidosCocinaResponse.jsonBody).toString()} pedidos',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.inter(
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontWeight,
@@ -347,45 +346,64 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                         .bodyMedium
                                         .fontStyle,
                                   ),
-                        ),
-                      ),
-                      if (functions
-                              .contarListaJson(
-                                  kitchenNOrdersGetPedidosCocinaResponse
-                                      .jsonBody)
-                              .toString() ==
-                          '0')
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 40.0, 0.0, 0.0),
-                          child: Container(
-                            width: double.infinity,
-                            height: 100.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(8.0),
-                                bottomRight: Radius.circular(8.0),
-                                topLeft: Radius.circular(8.0),
-                                topRight: Radius.circular(8.0),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.hourglass_top,
-                                  color: Color(0xFFF0A719),
-                                  size: 24.0,
-                                ),
-                                Text(
-                                  '¡Todo al día! Esperando nuevos pedidos',
-                                  style: FlutterFlowTheme.of(context)
+                                  fontSize: 16.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
                                       .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                          ),
+                        ),
+                        if (functions
+                                .contarListaJson(
+                                    kitchenNOrdersGetPedidosCocinaResponse
+                                        .jsonBody)
+                                .toString() ==
+                            '0')
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 40.0, 0.0, 0.0),
+                            child: Container(
+                              width: double.infinity,
+                              height: 100.0,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(8.0),
+                                  bottomRight: Radius.circular(8.0),
+                                  topLeft: Radius.circular(8.0),
+                                  topRight: Radius.circular(8.0),
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.hourglass_top,
+                                    color: Color(0xFFF0A719),
+                                    size: 24.0,
+                                  ),
+                                  Text(
+                                    '¡Todo al día! Esperando nuevos pedidos',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          font: GoogleFonts.inter(
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                          letterSpacing: 0.0,
                                           fontWeight:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
@@ -395,117 +413,126 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                              ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      if (functions
-                              .contarListaJson(
+                        if (functions
+                                .contarListaJson(
+                                    kitchenNOrdersGetPedidosCocinaResponse
+                                        .jsonBody)
+                                .toString() !=
+                            '0')
+                          Expanded(
+                            child: Builder(
+                              builder: (context) {
+                                final comandaItem = getJsonField(
                                   kitchenNOrdersGetPedidosCocinaResponse
-                                      .jsonBody)
-                              .toString() !=
-                          '0')
-                        Expanded(
-                          child: Builder(
-                            builder: (context) {
-                              final comandaItem = getJsonField(
-                                kitchenNOrdersGetPedidosCocinaResponse.jsonBody,
-                                r'''$''',
-                              ).toList();
+                                      .jsonBody,
+                                  r'''$''',
+                                ).toList();
 
-                              return ListView.builder(
-                                padding: EdgeInsets.zero,
-                                shrinkWrap: true,
-                                scrollDirection: Axis.vertical,
-                                itemCount: comandaItem.length,
-                                itemBuilder: (context, comandaItemIndex) {
-                                  final comandaItemItem =
-                                      comandaItem[comandaItemIndex];
-                                  return Visibility(
-                                    visible: functions.existePedidoEnLista(
-                                            FFAppState().pedidosListos.toList(),
-                                            getJsonField(
-                                              comandaItemItem,
-                                              r'''$.pedido_id''',
-                                            )) ==
-                                        false,
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 20.0, 0.0, 0.0),
-                                      child: InkWell(
-                                        splashColor: Colors.transparent,
-                                        focusColor: Colors.transparent,
-                                        hoverColor: Colors.transparent,
-                                        highlightColor: Colors.transparent,
-                                        onTap: () async {
-                                          context.pushNamed(
-                                            DetallePedidoPageWidget.routeName,
-                                            queryParameters: {
-                                              'pedidoInfo': serializeParam(
-                                                getJsonField(
-                                                  comandaItemItem,
-                                                  r'''$''',
+                                return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: comandaItem.length,
+                                  itemBuilder: (context, comandaItemIndex) {
+                                    final comandaItemItem =
+                                        comandaItem[comandaItemIndex];
+                                    return Visibility(
+                                      visible: functions.existePedidoEnLista(
+                                              FFAppState()
+                                                  .pedidosListos
+                                                  .toList(),
+                                              getJsonField(
+                                                comandaItemItem,
+                                                r'''$.pedido_id''',
+                                              )) ==
+                                          false,
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 20.0, 0.0, 0.0),
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            context.pushNamed(
+                                              DetallePedidoPageWidget.routeName,
+                                              queryParameters: {
+                                                'pedidoInfo': serializeParam(
+                                                  getJsonField(
+                                                    comandaItemItem,
+                                                    r'''$''',
+                                                  ),
+                                                  ParamType.JSON,
                                                 ),
-                                                ParamType.JSON,
-                                              ),
-                                            }.withoutNulls,
-                                          );
-                                        },
-                                        child: Container(
-                                          width: double.infinity,
-                                          height: 149.3,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 4.0,
-                                                color: Color(0x33000000),
-                                                offset: Offset(
-                                                  0.0,
-                                                  2.0,
-                                                ),
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    16.0, 16.0, 16.0, 16.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Text(
-                                                        'Pedido para: ${getJsonField(
-                                                          comandaItemItem,
-                                                          r'''$.nombre_cliente''',
-                                                        ).toString()}',
-                                                        style: FlutterFlowTheme
-                                                                .of(context)
-                                                            .bodyMedium
-                                                            .override(
-                                                              font: GoogleFonts
-                                                                  .inter(
+                                              }.withoutNulls,
+                                            );
+                                          },
+                                          child: Container(
+                                            width: double.infinity,
+                                            height: 149.3,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 4.0,
+                                                  color: Color(0x33000000),
+                                                  offset: Offset(
+                                                    0.0,
+                                                    2.0,
+                                                  ),
+                                                )
+                                              ],
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 16.0, 16.0, 16.0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Row(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Pedido para: ${getJsonField(
+                                                            comandaItemItem,
+                                                            r'''$.nombre_cliente''',
+                                                          ).toString()}',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .inter(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                fontSize: 18.0,
+                                                                letterSpacing:
+                                                                    0.0,
                                                                 fontWeight:
                                                                     FontWeight
                                                                         .bold,
@@ -514,420 +541,409 @@ class _KitchenNOrdersWidgetState extends State<KitchenNOrdersWidget> {
                                                                     .bodyMedium
                                                                     .fontStyle,
                                                               ),
-                                                              fontSize: 18.0,
-                                                              letterSpacing:
-                                                                  0.0,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontStyle:
-                                                                  FlutterFlowTheme.of(
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                      if (functions
+                                                              .esEstadoConfirmadoSucursal(
+                                                                  getJsonField(
+                                                            comandaItemItem,
+                                                            r'''$.estado_pedido''',
+                                                          )) ==
+                                                          true)
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        8.0,
+                                                                        4.0,
+                                                                        8.0,
+                                                                        4.0),
+                                                            child: Container(
+                                                              width: 102.5,
+                                                              height: 32.1,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Color(
+                                                                    0xFFF0A719),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              child: Align(
+                                                                alignment:
+                                                                    AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0),
+                                                                child: Text(
+                                                                  'Nuevo',
+                                                                  style: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyMedium
-                                                                      .fontStyle,
-                                                            ),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    ),
-                                                    if (functions
-                                                            .esEstadoConfirmadoSucursal(
-                                                                getJsonField(
-                                                          comandaItemItem,
-                                                          r'''$.estado_pedido''',
-                                                        )) ==
-                                                        true)
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0.0, 0.0),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      8.0,
-                                                                      4.0,
-                                                                      8.0,
-                                                                      4.0),
-                                                          child: Container(
-                                                            width: 102.5,
-                                                            height: 32.1,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: Color(
-                                                                  0xFFF0A719),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            child: Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child: Text(
-                                                                'Nuevo',
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
+                                                                      .override(
+                                                                        font: GoogleFonts
+                                                                            .inter(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontStyle,
+                                                                        ),
+                                                                        color: Colors
+                                                                            .white,
+                                                                        letterSpacing:
+                                                                            0.0,
                                                                         fontWeight:
                                                                             FontWeight.w600,
                                                                         fontStyle: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .fontStyle,
                                                                       ),
-                                                                      color: Colors
-                                                                          .white,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    if (functions
-                                                            .esEstadoPreparacionCocina(
-                                                                getJsonField(
-                                                          comandaItemItem,
-                                                          r'''$.estado_pedido''',
-                                                        )) ==
-                                                        true)
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                0.0, 0.0),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      8.0,
-                                                                      4.0,
-                                                                      8.0,
-                                                                      4.0),
-                                                          child: Container(
-                                                            height: 32.1,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryText,
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                            child: Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child: Text(
-                                                                'En preparación',
-                                                                style: FlutterFlowTheme.of(
+                                                      if (functions
+                                                              .esEstadoPreparacionCocina(
+                                                                  getJsonField(
+                                                            comandaItemItem,
+                                                            r'''$.estado_pedido''',
+                                                          )) ==
+                                                          true)
+                                                        Align(
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  0.0, 0.0),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        8.0,
+                                                                        4.0,
+                                                                        8.0,
+                                                                        4.0),
+                                                            child: Container(
+                                                              height: 32.1,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
+                                                                    .secondaryText,
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                              ),
+                                                              child: Align(
+                                                                alignment:
+                                                                    AlignmentDirectional(
+                                                                        0.0,
+                                                                        0.0),
+                                                                child: Text(
+                                                                  'En preparación',
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        font: GoogleFonts
+                                                                            .inter(
+                                                                          fontWeight:
+                                                                              FontWeight.w600,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontStyle,
+                                                                        ),
+                                                                        color: Colors
+                                                                            .white,
+                                                                        letterSpacing:
+                                                                            0.0,
                                                                         fontWeight:
                                                                             FontWeight.w600,
                                                                         fontStyle: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .fontStyle,
                                                                       ),
-                                                                      color: Colors
-                                                                          .white,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w600,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
                                                         ),
-                                                      ),
-                                                  ],
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          0.0, 12.0, 0.0, 0.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.end,
-                                                    children: [
-                                                      Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Text(
-                                                            'Fecha: ${functions.formatearFechaIso(getJsonField(
-                                                              comandaItemItem,
-                                                              r'''$.fecha_pedido_confirmado''',
-                                                            ).toString())}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .inter(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                          ),
-                                                          Text(
-                                                            '${getJsonField(
-                                                              comandaItemItem,
-                                                              r'''$.detalle_pedido[0].producto''',
-                                                            ).toString()}, ${getJsonField(
-                                                              comandaItemItem,
-                                                              r'''$.detalle_pedido[0].tipo_alitas''',
-                                                            ).toString()}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .inter(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                          ),
-                                                          Text(
-                                                            getJsonField(
-                                                              comandaItemItem,
-                                                              r'''$.tipo_retiro''',
-                                                            ).toString(),
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .inter(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Text(
-                                                        'Ver más...',
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .inter(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodyMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                      ),
                                                     ],
                                                   ),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(0.0, 12.0,
+                                                                0.0, 0.0),
+                                                    child: Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .end,
+                                                      children: [
+                                                        Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          children: [
+                                                            Text(
+                                                              'Fecha: ${functions.formatearFechaIso(getJsonField(
+                                                                comandaItemItem,
+                                                                r'''$.fecha_pedido_confirmado''',
+                                                              ).toString())}',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    font: GoogleFonts
+                                                                        .inter(
+                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontWeight,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontWeight,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                            ),
+                                                            Text(
+                                                              '${getJsonField(
+                                                                comandaItemItem,
+                                                                r'''$.detalle_pedido[0].producto''',
+                                                              ).toString()}, ${getJsonField(
+                                                                comandaItemItem,
+                                                                r'''$.detalle_pedido[0].tipo_alitas''',
+                                                              ).toString()}',
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    font: GoogleFonts
+                                                                        .inter(
+                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontWeight,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontWeight,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                            ),
+                                                            Text(
+                                                              getJsonField(
+                                                                comandaItemItem,
+                                                                r'''$.tipo_retiro''',
+                                                              ).toString(),
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    font: GoogleFonts
+                                                                        .inter(
+                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontWeight,
+                                                                      fontStyle: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .bodyMedium
+                                                                          .fontStyle,
+                                                                    ),
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontWeight,
+                                                                    fontStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .bodyMedium
+                                                                        .fontStyle,
+                                                                  ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        Text(
+                                                          'Ver más...',
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .inter(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontWeight,
+                                                                fontStyle: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .fontStyle,
+                                                              ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 16.0, 0.0, 26.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              FFButtonWidget(
+                                onPressed: () async {
+                                  safeSetState(
+                                      () => _model.apiRequestCompleter = null);
+                                  await _model.waitForApiRequestCompleted();
                                 },
-                              );
-                            },
+                                text: 'Comandas',
+                                icon: Icon(
+                                  Icons.list,
+                                  size: 15.0,
+                                ),
+                                options: FFButtonOptions(
+                                  width: 160.0,
+                                  height: 50.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: Color(0xFFF0A719),
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        font: GoogleFonts.interTight(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
+                                      ),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                              ),
+                              FFButtonWidget(
+                                onPressed: () async {
+                                  context.pushNamed(
+                                      PedidosListosPageWidget.routeName);
+                                },
+                                text: 'Listos para Entrega',
+                                icon: Icon(
+                                  Icons.notifications,
+                                  size: 15.0,
+                                ),
+                                options: FFButtonOptions(
+                                  width: 160.0,
+                                  height: 50.0,
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 0.0, 16.0, 0.0),
+                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 0.0),
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  textStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .override(
+                                        font: GoogleFonts.interTight(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .fontStyle,
+                                      ),
+                                  elevation: 0.0,
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 16.0, 0.0, 26.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            FFButtonWidget(
-                              onPressed: () async {
-                                safeSetState(
-                                    () => _model.apiRequestCompleter = null);
-                                await _model.waitForApiRequestCompleted();
-                              },
-                              text: 'Comandas',
-                              icon: Icon(
-                                Icons.list,
-                                size: 15.0,
-                              ),
-                              options: FFButtonOptions(
-                                width: 160.0,
-                                height: 50.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: Color(0xFFF0A719),
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                            ),
-                            FFButtonWidget(
-                              onPressed: () async {
-                                context.pushNamed(
-                                    PedidosListosPageWidget.routeName);
-                              },
-                              text: 'Listos para Entrega',
-                              icon: Icon(
-                                Icons.notifications,
-                                size: 15.0,
-                              ),
-                              options: FFButtonOptions(
-                                width: 160.0,
-                                height: 50.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 0.0, 16.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      font: GoogleFonts.interTight(
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .fontStyle,
-                                      ),
-                                      color: Colors.white,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontWeight,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .fontStyle,
-                                    ),
-                                elevation: 0.0,
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
