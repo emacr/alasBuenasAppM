@@ -269,6 +269,7 @@ class LoginAppMovilCall {
 class GetPedidosRepartidorCall {
   static Future<ApiCallResponse> call({
     String? token = '',
+    String? estado = 'eq.en_camino',
   }) async {
     return ApiManager.instance.makeApiCall(
       callName: 'getPedidosRepartidor',
@@ -279,7 +280,9 @@ class GetPedidosRepartidorCall {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ${token}',
       },
-      params: {},
+      params: {
+        'estado_pedido': "${estado}",
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
