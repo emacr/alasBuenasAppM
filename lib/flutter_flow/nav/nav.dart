@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 import '/index.dart';
@@ -33,12 +34,32 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) => LoginWidget(),
+      errorBuilder: (context, state) => appStateNotifier.showSplashImage
+          ? Builder(
+              builder: (context) => Container(
+                color: FlutterFlowTheme.of(context).secondaryBackground,
+                child: Image.asset(
+                  'assets/images/logo.jpg',
+                  fit: BoxFit.fitWidth,
+                ),
+              ),
+            )
+          : LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) => LoginWidget(),
+          builder: (context, _) => appStateNotifier.showSplashImage
+              ? Builder(
+                  builder: (context) => Container(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    child: Image.asset(
+                      'assets/images/logo.jpg',
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                )
+              : LoginWidget(),
         ),
         FFRoute(
           name: KitchenNOrdersWidget.routeName,

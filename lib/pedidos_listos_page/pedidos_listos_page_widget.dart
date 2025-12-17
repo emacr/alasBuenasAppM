@@ -533,10 +533,12 @@ class _PedidosListosPageWidgetState extends State<PedidosListosPageWidget> {
                                                       MainAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      getJsonField(
+                                                      functions
+                                                          .formatearFechaIso(
+                                                              getJsonField(
                                                         pedidosListosItemItem,
                                                         r'''$.fecha_pedido_confirmado''',
-                                                      ).toString(),
+                                                      ).toString()),
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
