@@ -158,7 +158,7 @@ class _DetallePedidoPageWidgetState extends State<DetallePedidoPageWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Icon(
-                                    Icons.directions_walk_sharp,
+                                    Icons.restaurant,
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
                                     size: 40.0,

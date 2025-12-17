@@ -259,3 +259,10 @@ bool esEstadoPreparacionCocina(dynamic datoBd) {
   // El .toString() convierte el JSON a texto limpio
   return datoBd.toString() == 'en preparacion';
 }
+
+String traducirJsonAString(dynamic dato) {
+  if (dato == null) {
+    return '';
+  }
+  return dato.toString();
+}
